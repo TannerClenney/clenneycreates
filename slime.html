@@ -60,6 +60,7 @@
       overflow: hidden;
       text-align: center;
       transition: transform 0.3s ease;
+      padding-bottom: 1rem;
     }
     .slime-item:hover {
       transform: translateY(-5px);
@@ -68,13 +69,39 @@
       max-width: 100%;
       height: auto;
       display: block;
+      transition: transform 0.3s ease;
+    }
+    .slime-item:hover img {
+      transform: scale(1.05);
     }
     .slime-item h3 {
-      margin: 0.75rem;
+      margin: 0.75rem 0 0.25rem;
       color: #f4a3a3;
     }
     .slime-item p {
-      margin: 0 1rem 1rem;
+      margin: 0 1rem 0.75rem;
+    }
+    .badge {
+      display: inline-block;
+      background-color: #f4a3a3;
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .buy-button {
+      background-color: #f4a3a3;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .buy-button:hover {
+      background-color: #e38c8c;
     }
   </style>
 </head>
@@ -93,29 +120,35 @@
   <main>
     <h1>Slime Collection</h1>
     <div class="slime-grid">
-      <!-- Slime Items Placeholder -->
       <div class="slime-item">
         <img src="images/slime/cloud-cotton-candy.jpg" alt="Cloud Cotton Candy Slime">
         <h3>Cloud Cotton Candy</h3>
+        <span class="badge">Fluffy</span>
         <p>Stretchy, fluffy fun with a sweet pastel swirl.</p>
+        <button class="buy-button">Order Now</button>
       </div>
       <div class="slime-item">
         <img src="images/slime/glitter-galaxy-purple.jpg" alt="Glitter Galaxy Purple Slime">
         <h3>Glitter Galaxy</h3>
+        <span class="badge">Glow</span>
         <p>Cosmic sparkle in a galaxy of purple swirls.</p>
+        <button class="buy-button">Order Now</button>
       </div>
       <div class="slime-item">
         <img src="images/slime/clear-bubble-gum.jpg" alt="Clear Bubble Gum Slime">
         <h3>Clear Bubble Gum</h3>
+        <span class="badge">Clear</span>
         <p>Crystal clear with a soft pink pop and bubble scent.</p>
+        <button class="buy-button">Order Now</button>
       </div>
-      <!-- Add 7 more varieties here -->
       <div class="slime-item">
         <img src="images/slime/blue-bubble-gum.jpg" alt="Blue Bubble Gum Slime">
-        <h3>Clear Bubble Gum</h3>
-        <p>Crystal clear with a soft pink pop and bubble scent.</p>
+        <h3>Blue Bubble Gum</h3>
+        <span class="badge">Clear</span>
+        <p>Cool minty twist with a pop of blue.</p>
+        <button class="buy-button">Order Now</button>
       </div>
-    
+      <!-- Add more slime items as desired -->
     </div>
   </main>
 
