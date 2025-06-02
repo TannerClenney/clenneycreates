@@ -60,6 +60,10 @@
       padding: 0.75rem 1.25rem;
       display: inline-block;
     }
+    nav a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
     main {
       max-width: 1000px;
       margin: 0 auto;
@@ -94,6 +98,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .category img {
       max-width: 100%;
@@ -131,11 +136,6 @@
         text-align: center;
       }
     }
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
   </style>
 </head>
 <body>
@@ -159,28 +159,34 @@
     <section id="collections" class="categories">
       <h2>Explore Our Collections</h2>
       <div class="category-grid">
-        <div class="category">
-          <img src="images/index/CrochetIndex.jpg" alt="Crochet Creations">
-          <h3>Crochet</h3>
-          <p>Warm, cozy, and handmade with love.</p>
-        </div>
-        <a href="slime.html" style="text-decoration: none; color: inherit;">
-        <div class="category">
-        <img src="images/index/SlimeIndex.jpg" alt="Slime Fun">
-        <h3>Slime</h3>
-        <p>Gooey, glittery, stretchy fun for all ages.</p>
-        </div>
+        <a href="crochet.html" style="text-decoration: none; color: inherit;">
+          <div class="category">
+            <img src="images/index/CrochetIndex.jpg" alt="Crochet Creations">
+            <h3>Crochet</h3>
+            <p>Warm, cozy, and handmade with love.</p>
+          </div>
         </a>
-        <div class="category">
-          <img src="images/index/RecycledPaperIndex.jpg" alt="Recycled Paper Products">
-          <h3>Recycled Paper</h3>
-          <p>Eco-friendly, artistic creations from repurposed paper goods.</p>
-        </div>
-        <div class="category">
-          <img src="images/index/CustomIndex.jpg" alt="Custom Orders">
-          <h3>Custom Orders</h3>
-          <p>Let us bring your creative vision to life!</p>
-        </div>
+        <a href="slime.html" style="text-decoration: none; color: inherit;">
+          <div class="category">
+            <img src="images/index/SlimeIndex.jpg" alt="Slime Fun">
+            <h3>Slime</h3>
+            <p>Gooey, glittery, stretchy fun for all ages.</p>
+          </div>
+        </a>
+        <a href="recycled.html" style="text-decoration: none; color: inherit;">
+          <div class="category">
+            <img src="images/index/RecycledPaperIndex.jpg" alt="Recycled Paper Products">
+            <h3>Recycled Paper</h3>
+            <p>Eco-friendly, artistic creations from repurposed paper goods.</p>
+          </div>
+        </a>
+        <a href="custom.html" style="text-decoration: none; color: inherit;">
+          <div class="category">
+            <img src="images/index/CustomIndex.jpg" alt="Custom Orders">
+            <h3>Custom Orders</h3>
+            <p>Let us bring your creative vision to life!</p>
+          </div>
+        </a>
       </div>
     </section>
 
