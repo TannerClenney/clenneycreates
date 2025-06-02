@@ -72,7 +72,20 @@
     .intro {
       text-align: center;
       margin-bottom: 2rem;
+    }
+    .intro-bubble {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
       font-size: 1.1rem;
+    }
+    .intro-bubble .highlight {
+      color: var(--accent);
+      font-weight: bold;
     }
     .categories {
       margin-top: 3rem;
@@ -153,7 +166,16 @@
 
   <main>
     <section class="intro">
-      <p>Welcome to Clenney Creates — a vibrant space where our family shares all the fun, quirky, and crafty things we love to make. From gooey slime to cozy crochet, from beaded bracelets to one-of-a-kind custom orders, this is where our creativity comes to life. Each of us brings something unique, and together, we hope to spark joy, ideas, and maybe even send a handmade something your way.</p>
+      <div class="intro-bubble">
+        <p>
+          Welcome to <strong>Clenney Creates</strong> — a vibrant space where our family shares all the fun, quirky, and crafty things we love to make.
+          From <span class="highlight">gooey slime</span> to <span class="highlight">cozy crochet</span>, from <span class="highlight">beaded bracelets</span> to <span class="highlight">custom orders</span>, this is where our creativity comes to life.
+        </p>
+        <p>
+          Each of us brings something unique, and together, we hope to spark joy, ideas, and maybe even send a handmade something your way.
+        </p>
+        <hr style="margin-top: 2rem; border: none; border-top: 2px dashed var(--accent); width: 50px; margin-left: auto; margin-right: auto;">
+      </div>
     </section>
 
     <section id="collections" class="categories">
