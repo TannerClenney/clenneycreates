@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clenney Creates</title>
+  <style>
+    :root {
+      --bg-color: #fef6e4;
+      --accent: #f582ae;
+      --text-color: #001858;
+      --highlight: #8bd3dd;
+      --white: #fff;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .creators {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .creator {
+      background: var(--white);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .creator h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .creator p {
+      font-size: 0.9rem;
+    }
+    .featured {
+      margin-top: 3rem;
+      padding: 1rem;
+      background: var(--highlight);
+      border-radius: 10px;
+    }
+    .featured h2 {
+      margin-bottom: 1rem;
+    }
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Clenney Creates</h1>
+    <p>A joyful hub of ever-changing, always-awesome family creations ✨</p>
+  </header>
+
+  <section class="creators">
+    <div class="creator">
+      <h3>Creator One</h3>
+      <p>Blog posts, videos, or slime experiments!</p>
+    </div>
+    <div class="creator">
+      <h3>Creator Two</h3>
+      <p>Handmade crafts and colorful creations.</p>
+    </div>
+    <div class="creator">
+      <h3>Creator Three</h3>
+      <p>Crochet, stitching, and homey goods.</p>
+    </div>
+    <div class="creator">
+      <h3>Creator Four</h3>
+      <p>Whatever sparks joy this month!</p>
+    </div>
+  </section>
+
+  <section class="featured">
+    <h2>🌟 Featured Creation</h2>
+    <p>Check out our latest work — it's colorful, fun, and totally unique. Want to buy it? <a href="#">Reach out here</a>!</p>
+  </section>
+
+  <footer>
+    <p>© 2025 Clenney Creates | Made with love</p>
+  </footer>
+</body>
+</html>
