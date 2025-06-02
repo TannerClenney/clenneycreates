@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clenney Creates - Slime Collection</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffaf7;
+      color: #5a4635;
+      margin: 0;
+    }
+    header, footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    header img {
+      max-width: 150px;
+      display: block;
+      margin: 0 auto;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem;
+      background-color: #ffffff;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+    nav a {
+      text-decoration: none;
+      color: #5a4635;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+    }
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    h1 {
+      color: #f4a3a3;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .slime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .slime-item {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .slime-item:hover {
+      transform: translateY(-5px);
+    }
+    .slime-item img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .slime-item h3 {
+      margin: 0.75rem;
+      color: #f4a3a3;
+    }
+    .slime-item p {
+      margin: 0 1rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html"><img src="images/logo.jpg" alt="Clenney Creates Logo"></a>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="makers.html">Meet the Makers</a>
+    <a href="#">Collections</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <main>
+    <h1>Slime Collection</h1>
+    <div class="slime-grid">
+      <!-- Slime Items Placeholder -->
+      <div class="slime-item">
+        <img src="images/slime/cloud-cotton-candy.jpg" alt="Cloud Cotton Candy Slime">
+        <h3>Cloud Cotton Candy</h3>
+        <p>Stretchy, fluffy fun with a sweet pastel swirl.</p>
+      </div>
+      <div class="slime-item">
+        <img src="images/slime/glitter-galaxy-purple.jpg" alt="Glitter Galaxy Purple Slime">
+        <h3>Glitter Galaxy</h3>
+        <p>Cosmic sparkle in a galaxy of purple swirls.</p>
+      </div>
+      <div class="slime-item">
+        <img src="images/slime/clear-bubble-gum.jpg" alt="Clear Bubble Gum Slime">
+        <h3>Clear Bubble Gum</h3>
+        <p>Crystal clear with a soft pink pop and bubble scent.</p>
+      </div>
+      <!-- Add 7 more varieties here -->
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Clenney Creates | Slimey fun for everyone</p>
+  </footer>
+</body>
+</html>
