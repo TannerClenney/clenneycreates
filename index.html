@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clenney Creates</title>
   <style>
     :root {
       --bg-color: #fffaf7;
@@ -25,37 +24,32 @@
     header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 3rem 1rem 2rem;
-      position: relative;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1.5rem 1rem;
+      background-color: var(--white);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
     .logo {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
       max-width: 200px;
+      width: 100%;
       height: auto;
     }
-
-
-
-    header h1 {
-      font-size: 3rem;
-      color: var(--accent);
-    }
     header p {
+      flex: 1 1 100%;
+      text-align: center;
       font-size: 1.2rem;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
     nav {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
       padding: 1rem;
       background-color: var(--white);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
     }
     nav a {
       text-decoration: none;
@@ -119,12 +113,21 @@
       color: #888;
       padding: 1rem;
     }
+    @media (max-width: 600px) {
+      .logo {
+        max-width: 120px;
+        margin: 0 auto;
+      }
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <img src="images/logo.jpg" alt="Clenney Creates Logo" class="logo">
-    <h1>Clenney Creates</h1>
     <p>A joyful hub of ever-changing, always-awesome family creations ✨</p>
   </header>
 
