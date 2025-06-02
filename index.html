@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="images/favicon.png">
   <style>
     :root {
       --bg-color: #fffaf7;
@@ -56,6 +57,10 @@
       text-decoration: none;
       color: var(--text-color);
       font-weight: bold;
+      padding: 0.75rem 1.25rem;
+      display: inline-block;
+    }
+
     }
     main {
       max-width: 1000px;
@@ -72,6 +77,10 @@
       padding: 1rem;
       background: var(--highlight);
       border-radius: 10px;
+    }
+    .category:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     }
     .categories h2 {
       margin-bottom: 1rem;
