@@ -86,18 +86,27 @@
     .categories h2 {
       margin-bottom: 1rem;
     }
-    .categories ul {
-      list-style: none;
-      padding-left: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
     }
-    .categories li {
+    .category {
       background: var(--white);
-      padding: 0.5rem 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .category img {
+      max-width: 100%;
+      height: auto;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 0.5rem;
+    }
+    .category h3 {
+      margin-bottom: 0.5rem;
+      color: var(--accent);
     }
     .featured {
       margin-top: 3rem;
@@ -126,7 +135,7 @@
   <nav>
     <a href="#">Home</a>
     <a href="#creators">Meet the Makers</a>
-    <a href="#shop">Creations</a>
+    <a href="#collections">Collections</a>
     <a href="#contact">Contact</a>
   </nav>
 
@@ -154,14 +163,30 @@
       </div>
     </section>
 
-    <section class="categories">
+    <section id="collections" class="categories">
       <h2>Explore Our Collections</h2>
-      <ul>
-        <li>Crochet</li>
-        <li>Slime</li>
-        <li>Bracelets</li>
-        <li>Custom Orders</li>
-      </ul>
+      <div class="category-grid">
+        <div class="category">
+          <img src="images/crochet.jpg" alt="Crochet Creations">
+          <h3>Crochet</h3>
+          <p>Warm, cozy, and handmade with love.</p>
+        </div>
+        <div class="category">
+          <img src="images/slime.jpg" alt="Slime Fun">
+          <h3>Slime</h3>
+          <p>Gooey, glittery, stretchy fun for all ages.</p>
+        </div>
+        <div class="category">
+          <img src="images/bracelets.jpg" alt="Bracelets">
+          <h3>Bracelets</h3>
+          <p>Bright, colorful, and totally personal accessories.</p>
+        </div>
+        <div class="category">
+          <img src="images/custom.jpg" alt="Custom Orders">
+          <h3>Custom Orders</h3>
+          <p>Let us bring your creative vision to life!</p>
+        </div>
+      </div>
     </section>
 
     <section id="shop" class="featured">
