@@ -24,9 +24,9 @@
     header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      padding: 1.5rem 1rem;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem 1rem;
       background-color: var(--white);
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
@@ -34,6 +34,7 @@
       max-width: 200px;
       width: 100%;
       height: auto;
+      margin-bottom: 1rem;
     }
     header p {
       flex: 1 1 100%;
@@ -116,8 +117,13 @@
     @media (max-width: 600px) {
       .logo {
         max-width: 120px;
-        margin: 0 auto;
+        margin: 0 auto 1rem;
       }
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
       header {
         flex-direction: column;
         text-align: center;
