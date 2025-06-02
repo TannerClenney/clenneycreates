@@ -21,19 +21,36 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      padding: 2rem;
     }
     header {
       text-align: center;
-      margin-bottom: 2rem;
+      padding: 3rem 1rem 2rem;
     }
     header h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       color: var(--accent);
     }
     header p {
       font-size: 1.2rem;
       margin-top: 0.5rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      background-color: var(--white);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
     }
     .creators {
       display: grid;
@@ -69,6 +86,7 @@
       text-align: center;
       font-size: 0.8rem;
       color: #888;
+      padding: 1rem;
     }
   </style>
 </head>
@@ -78,29 +96,38 @@
     <p>A joyful hub of ever-changing, always-awesome family creations ✨</p>
   </header>
 
-  <section class="creators">
-    <div class="creator">
-      <h3>Creator One</h3>
-      <p>Blog posts, videos, or slime experiments!</p>
-    </div>
-    <div class="creator">
-      <h3>Creator Two</h3>
-      <p>Handmade crafts and colorful creations.</p>
-    </div>
-    <div class="creator">
-      <h3>Creator Three</h3>
-      <p>Crochet, stitching, and homey goods.</p>
-    </div>
-    <div class="creator">
-      <h3>Creator Four</h3>
-      <p>Whatever sparks joy this month!</p>
-    </div>
-  </section>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#creators">Meet the Makers</a>
+    <a href="#shop">Creations</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-  <section class="featured">
-    <h2>🌟 Featured Creation</h2>
-    <p>Check out our latest work — it's colorful, fun, and totally unique. Want to buy it? <a href="#">Reach out here</a>!</p>
-  </section>
+  <main>
+    <section id="creators" class="creators">
+      <div class="creator">
+        <h3>Creator One</h3>
+        <p>Blog posts, videos, or slime experiments!</p>
+      </div>
+      <div class="creator">
+        <h3>Creator Two</h3>
+        <p>Handmade crafts and colorful creations.</p>
+      </div>
+      <div class="creator">
+        <h3>Creator Three</h3>
+        <p>Crochet, stitching, and homey goods.</p>
+      </div>
+      <div class="creator">
+        <h3>Creator Four</h3>
+        <p>Whatever sparks joy this month!</p>
+      </div>
+    </section>
+
+    <section id="shop" class="featured">
+      <h2>🌟 Featured Creation</h2>
+      <p>Check out our latest work — it's colorful, fun, and totally unique. Want to buy it? <a href="#contact">Reach out here</a>!</p>
+    </section>
+  </main>
 
   <footer>
     <p>© 2025 Clenney Creates | Made with love</p>
