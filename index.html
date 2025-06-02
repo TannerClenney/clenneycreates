@@ -23,8 +23,20 @@
       color: var(--text-color);
     }
     header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       text-align: center;
       padding: 3rem 1rem 2rem;
+      position: relative;
+    }
+    .logo {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 60px;
+      height: auto;
     }
     header h1 {
       font-size: 3rem;
@@ -108,6 +120,7 @@
 </head>
 <body>
   <header>
+    <img src="images/logo.jpg" alt="Clenney Creates Logo" class="logo">
     <h1>Clenney Creates</h1>
     <p>A joyful hub of ever-changing, always-awesome family creations ✨</p>
   </header>
@@ -138,9 +151,9 @@
           <p>Gooey, glittery, stretchy fun for all ages.</p>
         </div>
         <div class="category">
-          <img src="images/bracelets.jpg" alt="Bracelets">
-          <h3>Bracelets</h3>
-          <p>Bright, colorful, and totally personal accessories.</p>
+          <img src="images/recycled-paper.jpg" alt="Recycled Paper Products">
+          <h3>Recycled Paper</h3>
+          <p>Eco-friendly, artistic creations from repurposed paper goods.</p>
         </div>
         <div class="category">
           <img src="images/custom.jpg" alt="Custom Orders">
