@@ -6,11 +6,11 @@
   <title>Clenney Creates</title>
   <style>
     :root {
-      --bg-color: #fef6e4;
-      --accent: #f582ae;
-      --text-color: #001858;
-      --highlight: #8bd3dd;
-      --white: #fff;
+      --bg-color: #fffaf7;
+      --accent: #f4a3a3;
+      --text-color: #5a4635;
+      --highlight: #fdddc6;
+      --white: #ffffff;
     }
     * {
       margin: 0;
@@ -52,6 +52,11 @@
       margin: 0 auto;
       padding: 2rem;
     }
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
     .creators {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -71,6 +76,28 @@
     }
     .creator p {
       font-size: 0.9rem;
+    }
+    .categories {
+      margin-top: 3rem;
+      padding: 1rem;
+      background: var(--highlight);
+      border-radius: 10px;
+    }
+    .categories h2 {
+      margin-bottom: 1rem;
+    }
+    .categories ul {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .categories li {
+      background: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .featured {
       margin-top: 3rem;
@@ -104,6 +131,10 @@
   </nav>
 
   <main>
+    <section class="intro">
+      <p>Welcome to Clenney Creates — a vibrant space where our family shares all the fun, quirky, and crafty things we love to make. From gooey slime to cozy crochet, from beaded bracelets to one-of-a-kind custom orders, this is where our creativity comes to life. Each of us brings something unique, and together, we hope to spark joy, ideas, and maybe even send a handmade something your way.</p>
+    </section>
+
     <section id="creators" class="creators">
       <div class="creator">
         <h3>Creator One</h3>
@@ -121,6 +152,16 @@
         <h3>Creator Four</h3>
         <p>Whatever sparks joy this month!</p>
       </div>
+    </section>
+
+    <section class="categories">
+      <h2>Explore Our Collections</h2>
+      <ul>
+        <li>Crochet</li>
+        <li>Slime</li>
+        <li>Bracelets</li>
+        <li>Custom Orders</li>
+      </ul>
     </section>
 
     <section id="shop" class="featured">
