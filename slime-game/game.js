@@ -1,17 +1,19 @@
+// Clean slope-inspired slime game.js
 let scene, camera, renderer, ball;
-let velocity = new THREE.Vector3(0, 0, -0.2); // Forward speed
+let velocity = new THREE.Vector3(0, 0, -0.25);
 let yVelocity = 0;
 let horizontalVelocity = 0;
 const gravity = -0.01;
-const maxHorizontalSpeed = 0.3;
+const maxHorizontalSpeed = 0.4;
 const jumpForce = 0.25;
-const jumpDampen = 0.3;
+const jumpDampen = 0.4;
 const keys = {};
 const platformChunks = [];
 let lastPlatform = { x: 0, y: -1, z: 0 };
 let score = 0;
 let scoreText;
 let isGrounded = false;
+let speedMultiplier = 1;
 
 init();
 animate();
@@ -34,20 +36,17 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('game-container').appendChild(renderer.domElement);
 
-  // Lighting
-  scene.add(new THREE.AmbientLight(0x9999ff, 0.5));
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 20, 10);
   scene.add(light);
 
-  // Ball (player)
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
   ball = new THREE.Mesh(geometry, material);
-  ball.position.set(0, 0.5, 1); // just above platform
+  ball.position.set(0, 0.5, 1);
   scene.add(ball);
 
-  // Score UI
   scoreText = document.createElement('div');
   scoreText.style.position = 'absolute';
   scoreText.style.top = '10px';
@@ -58,23 +57,26 @@ function init() {
   scoreText.innerText = `Score: 0`;
   document.body.appendChild(scoreText);
 
-  // Initial platform path
-  for (let i = 0; i < 200; i++) {
-    spawnSafePlatform();
+  for (let i = 0; i < 300; i++) {
+    spawnCurvedPlatform();
   }
 }
 
-function spawnSafePlatform() {
+function spawnCurvedPlatform() {
   const width = 10;
   const depth = 20;
   const height = 1;
 
-  const x = lastPlatform.x;
-  const y = lastPlatform.y;
-  const z = lastPlatform.z - 1.8; // safe fall distance match
+  const curveAmplitude = 2;
+  const curveFrequency = 0.05;
+
+  const x = Math.sin(-lastPlatform.z * curveFrequency) * curveAmplitude;
+  const y = lastPlatform.y - 0.01; // subtle slope down
+  const z = lastPlatform.z - 2.5;
 
   const geo = new THREE.BoxGeometry(width, height, depth);
-  const mat = new THREE.MeshStandardMaterial({ color: 0x77ff77 });
+  geo.rotateX(-0.05); // slope effect
+  const mat = new THREE.MeshStandardMaterial({ color: 0x223322 });
   const platform = new THREE.Mesh(geo, mat);
   platform.position.set(x, y, z);
   scene.add(platform);
@@ -95,7 +97,6 @@ function animate() {
     horizontalVelocity *= 0.9;
   }
 
-  // Jump (future support, unused now)
   if ((keys[' '] || keys['space']) && isGrounded) {
     yVelocity = jumpForce;
     isGrounded = false;
@@ -115,22 +116,22 @@ function animate() {
     }
   }
 
-  // Move ball
+  // Speed ramping
+  speedMultiplier += 0.0001;
+  velocity.z = -0.25 * speedMultiplier;
+
   ball.position.x += horizontalVelocity;
   ball.position.y += yVelocity;
   ball.position.z += velocity.z;
 
-  // Move camera
   camera.position.z = ball.position.z + 15;
   camera.position.x = ball.position.x;
   camera.position.y = ball.position.y + 5;
   camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
 
-  // Score
-  score += 0.1;
+  score += 0.1 * speedMultiplier;
   scoreText.innerText = `Score: ${Math.floor(score)}`;
 
-  // Fall off map
   if (ball.position.y < -10) {
     endGame("You fell! Oops!");
     return;
@@ -146,3 +147,4 @@ function endGame(message) {
   alert(`${message}\nScore: ${finalScore}\nHigh Score: ${high}`);
   location.reload();
 }
+
