@@ -9,7 +9,7 @@ const maxHorizontalSpeed = 0.3;
 const keys = {};
 const platformChunks = [];
 const slimeObstacles = [];
-let lastPlatform = { x: 0, y: -1, z: 0 };
+let lastPlatform = { x: 0, y: -1, z: -2.5 };
 let lastPlatformZ = -30;
 let score = 0;
 let scoreText;
@@ -36,17 +36,17 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('game-container').appendChild(renderer.domElement);
 
-  // Lighting
+  // Lights
   scene.add(new THREE.AmbientLight(0x9999ff, 0.5));
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 20, 10);
   scene.add(light);
 
-  // Player ball
+  // Ball (player)
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
   ball = new THREE.Mesh(geometry, material);
-  ball.position.set(0, 0.5, 0); // aligned with platform top
+  ball.position.set(0, 0.5, 1); // Just above first platform
   scene.add(ball);
 
   // Score UI
@@ -61,7 +61,9 @@ function init() {
   document.body.appendChild(scoreText);
 
   // First platform
-  spawnPlatformChunk(0, 0, -1); // centered and flat
+  spawnPlatformChunk(0, 0, -1); // z = 0
+  // Second platform — very close
+  spawnPlatformChunk(-2.5, 0, -1); // z = -2.5
 }
 
 function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
@@ -108,7 +110,7 @@ function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
 function animate() {
   requestAnimationFrame(animate);
 
-  // Controls
+  // Movement input
   if (keys['a'] || keys['arrowleft']) {
     horizontalVelocity = Math.max(horizontalVelocity - 0.02, -maxHorizontalSpeed);
   } else if (keys['d'] || keys['arrowright']) {
@@ -136,24 +138,20 @@ function animate() {
     }
   }
 
-  // Move
   ball.position.x += horizontalVelocity;
   ball.position.y += yVelocity;
   ball.position.z += velocity.z;
 
-  // Camera
   camera.position.z = ball.position.z + 15;
   camera.position.x = ball.position.x;
   camera.position.y = ball.position.y + 5;
   camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
 
-  // Generate platforms
   while (lastPlatformZ > ball.position.z - 200) {
     lastPlatformZ -= 25;
     spawnPlatformChunk(lastPlatformZ);
   }
 
-  // Cleanup
   platformChunks.forEach((chunk, i) => {
     if (chunk.position.z > ball.position.z + 50) {
       scene.remove(chunk);
@@ -168,7 +166,6 @@ function animate() {
     }
   });
 
-  // Slime collision
   for (const slime of slimeObstacles) {
     if (ball.position.distanceTo(slime.position) < 1.2) {
       endGame("SLIME SPLAT! Try again.");
@@ -176,13 +173,11 @@ function animate() {
     }
   }
 
-  // Fall detection
   if (ball.position.y < -10) {
     endGame("You fell! Oops!");
     return;
   }
 
-  // Score
   score += 0.1;
   scoreText.innerText = `Score: ${Math.floor(score)}`;
 
