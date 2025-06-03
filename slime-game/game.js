@@ -1,7 +1,45 @@
 let scene, camera, renderer, ball;
 
 init();
-animate();
+animate(function animate() {
+  requestAnimationFrame(animate);
+
+  // Handle input
+  if (keys['a'] || keys['arrowleft']) {
+    horizontalVelocity = Math.max(horizontalVelocity - 0.02, -maxHorizontalSpeed);
+  } else if (keys['d'] || keys['arrowright']) {
+    horizontalVelocity = Math.min(horizontalVelocity + 0.02, maxHorizontalSpeed);
+  } else {
+    horizontalVelocity *= 0.9; // Slow drift back to center if no key is pressed
+  }
+
+  // Apply motion
+  ball.position.x += horizontalVelocity;
+  ball.position.z += ballVelocity.z;
+
+  // Keep camera following the ball
+  camera.position.z = ball.position.z + 10;
+  camera.position.x = ball.position.x;
+  camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
+
+  renderer.render(scene, camera);
+}
+);
+
+let ballVelocity = new THREE.Vector3(0, 0, -0.2); // Constant forward motion
+let horizontalVelocity = 0;
+const maxHorizontalSpeed = 0.3;
+
+const keys = {};
+
+window.addEventListener('keydown', (e) => {
+  keys[e.key.toLowerCase()] = true;
+});
+
+window.addEventListener('keyup', (e) => {
+  keys[e.key.toLowerCase()] = false;
+});
+
 
 function init() {
   scene = new THREE.Scene();
