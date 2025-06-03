@@ -22,7 +22,7 @@ window.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
 
 function init() {
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x111111);
+  scene.background = new THREE.Color(0x000000); // Dark background for contrast
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 10;
@@ -33,13 +33,13 @@ function init() {
   document.getElementById('game-container').appendChild(renderer.domElement);
 
   // Lighting
-  const ambient = new THREE.AmbientLight(0x404040);
+  const ambient = new THREE.AmbientLight(0x9999ff, 0.5); // Soft glow
   scene.add(ambient);
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 20, 10).normalize();
   scene.add(light);
 
-  // Ball
+  // Ball (player)
   const geometry = new THREE.SphereGeometry(1, 32, 32);
   const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
   ball = new THREE.Mesh(geometry, material);
@@ -92,7 +92,11 @@ function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
   const angle = (Math.random() * 10 - 5) * (Math.PI / 180);
 
   const geo = new THREE.BoxGeometry(width, height, depth);
-  const mat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.3, roughness: 0.5 });
+  const mat = new THREE.MeshStandardMaterial({
+    color: 0x77ff77, // Bright slime-green
+    metalness: 0.2,
+    roughness: 0.6
+  });
   const platform = new THREE.Mesh(geo, mat);
   platform.position.set(xOffset, yLevel, zOffset);
   platform.rotation.x = angle;
@@ -104,7 +108,11 @@ function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
   // Add slime obstacle
   if (Math.random() < 0.4 && zOffset !== -10) {
     const slimeGeo = new THREE.SphereGeometry(0.8, 16, 16);
-    const slimeMat = new THREE.MeshStandardMaterial({ color: 0xff33cc });
+    const slimeMat = new THREE.MeshStandardMaterial({
+      color: 0xff33cc,
+      emissive: 0xff33cc,
+      emissiveIntensity: 0.3
+    });
     const slime = new THREE.Mesh(slimeGeo, slimeMat);
     slime.position.set(xOffset + (Math.random() * 6 - 3), yLevel + 1, zOffset + Math.random() * 20 - 10);
     scene.add(slime);
