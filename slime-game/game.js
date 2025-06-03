@@ -8,6 +8,7 @@ const maxHorizontalSpeed = 0.3;
 const keys = {};
 const platformChunks = [];
 const slimeObstacles = [];
+let lastPlatform = { x: 0, y: -1, z: -40 };
 let lastPlatformZ = -100;
 let score = 0;
 let scoreText;
@@ -31,6 +32,9 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.getElementById('game-container').appendChild(renderer.domElement);
 
+  // Lighting
+  const ambient = new THREE.AmbientLight(0x404040);
+  scene.add(ambient);
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(0, 20, 10).normalize();
   scene.add(light);
@@ -44,6 +48,7 @@ function init() {
 
   // UI
   const div = document.createElement('div');
+  div.id = "score";
   div.style.position = 'absolute';
   div.style.top = '10px';
   div.style.left = '10px';
@@ -54,7 +59,9 @@ function init() {
   document.body.appendChild(div);
   scoreText = div;
 
-  spawnPlatformChunk(-40);
+  // Starting platform
+  spawnPlatformChunk(-10, 0, -1);
+  lastPlatformZ = -40;
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -63,29 +70,43 @@ function init() {
   });
 }
 
-function spawnPlatformChunk(zPos) {
-  const skip = Math.random() < 0.15;
+function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
+  const skip = Math.random() < 0.15 && zPos !== -10;
   if (skip) return;
 
   const width = 10 + Math.random() * 5;
   const depth = 30;
   const height = 1;
-  const xOffset = (Math.random() - 0.5) * 10;
-  const angle = (Math.random() * 10 - 5) * (Math.PI / 180); // tilt in radians
+
+  const maxXDist = 10;
+  const maxYDrop = 3;
+
+  let xOffset = (forceX !== null) ? forceX : lastPlatform.x + (Math.random() * 2 - 1) * maxXDist;
+  let yLevel = (forceY !== null) ? forceY : lastPlatform.y - Math.random() * maxYDrop;
+  let zOffset = zPos;
+
+  // Clamp values
+  xOffset = Math.max(Math.min(xOffset, 15), -15);
+  yLevel = Math.max(yLevel, -3);
+
+  const angle = (Math.random() * 10 - 5) * (Math.PI / 180);
 
   const geo = new THREE.BoxGeometry(width, height, depth);
-  const mat = new THREE.MeshStandardMaterial({ color: 0x222222 });
+  const mat = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.3, roughness: 0.5 });
   const platform = new THREE.Mesh(geo, mat);
-  platform.position.set(xOffset, -1, zPos);
+  platform.position.set(xOffset, yLevel, zOffset);
   platform.rotation.x = angle;
   scene.add(platform);
   platformChunks.push(platform);
 
-  if (Math.random() < 0.4) {
+  lastPlatform = { x: xOffset, y: yLevel, z: zOffset };
+
+  // Add slime obstacle
+  if (Math.random() < 0.4 && zOffset !== -10) {
     const slimeGeo = new THREE.SphereGeometry(0.8, 16, 16);
-    const slimeMat = new THREE.MeshStandardMaterial({ color: 0xff33cc, roughness: 0.4 });
+    const slimeMat = new THREE.MeshStandardMaterial({ color: 0xff33cc });
     const slime = new THREE.Mesh(slimeGeo, slimeMat);
-    slime.position.set(xOffset + (Math.random() * 6 - 3), 0, zPos + Math.random() * 20 - 10);
+    slime.position.set(xOffset + (Math.random() * 6 - 3), yLevel + 1, zOffset + Math.random() * 20 - 10);
     scene.add(slime);
     slimeObstacles.push(slime);
   }
@@ -94,7 +115,7 @@ function spawnPlatformChunk(zPos) {
 function animate() {
   requestAnimationFrame(animate);
 
-  // Controls
+  // Input
   if (keys['a'] || keys['arrowleft']) {
     horizontalVelocity = Math.max(horizontalVelocity - 0.02, -maxHorizontalSpeed);
   } else if (keys['d'] || keys['arrowright']) {
@@ -107,12 +128,11 @@ function animate() {
   yVelocity += gravity;
   isGrounded = false;
 
-  // Check platform collision (simplified)
+  // Platform collisions
   for (const platform of platformChunks) {
     const p = platform.position;
-    const distZ = Math.abs(ball.position.z - p.z);
     const onX = Math.abs(ball.position.x - p.x) < 10;
-    const onZ = distZ < 15;
+    const onZ = Math.abs(ball.position.z - p.z) < 15;
     const heightY = p.y + 1.5;
 
     if (onX && onZ && ball.position.y <= heightY + 0.1 && ball.position.y > heightY - 2) {
@@ -127,23 +147,23 @@ function animate() {
   ball.position.z += velocity.z;
   ball.position.y += yVelocity;
 
-  // Bounce feedback
+  // Visual feedback
   ball.rotation.z += horizontalVelocity * 0.1;
   ball.rotation.x += yVelocity * 0.1;
 
-  // Camera
-  camera.position.z = ball.position.z + 10;
-  camera.position.x = ball.position.x;
-  camera.position.y = ball.position.y + 5;
+  // Camera tracking
+  camera.position.z += (ball.position.z + 10 - camera.position.z) * 0.1;
+  camera.position.x += (ball.position.x - camera.position.x) * 0.1;
+  camera.position.y += ((ball.position.y + 5) - camera.position.y) * 0.05;
   camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
 
-  // Spawn Platforms
+  // Platform generation
   while (lastPlatformZ > ball.position.z - 200) {
     spawnPlatformChunk(lastPlatformZ);
     lastPlatformZ -= 30;
   }
 
-  // Remove Offscreen
+  // Cleanup
   platformChunks.forEach((chunk, i) => {
     if (chunk.position.z > ball.position.z + 50) {
       scene.remove(chunk);
@@ -158,7 +178,7 @@ function animate() {
     }
   });
 
-  // Slime Collision
+  // Slime collision
   for (const slime of slimeObstacles) {
     if (ball.position.distanceTo(slime.position) < 1.2) {
       endGame("SLIME SPLAT! Try again.");
@@ -166,7 +186,7 @@ function animate() {
     }
   }
 
-  // Fall off map
+  // Fall detection
   if (ball.position.y < -10) {
     endGame("You fell! Oops!");
     return;
@@ -186,3 +206,4 @@ function endGame(message) {
   alert(`${message}\nScore: ${finalScore}\nHigh Score: ${high}`);
   location.reload();
 }
+
