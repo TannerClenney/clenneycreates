@@ -75,4 +75,116 @@ function spawnPlatformChunk(zPos, forceX = null, forceY = null) {
   const maxZGap = 25;
 
   let x = (forceX !== null) ? forceX : lastPlatform.x + (Math.random() * 2 - 1) * maxXDist;
-  let y = (forceY !==
+  let y = (forceY !== null) ? forceY : lastPlatform.y - Math.random() * maxYDrop;
+  let z = lastPlatform.z - (minZGap + Math.random() * (maxZGap - minZGap));
+
+  x = Math.max(Math.min(x, 15), -15);
+  y = Math.max(y, -3);
+
+  const geo = new THREE.BoxGeometry(width, height, depth);
+  const mat = new THREE.MeshStandardMaterial({ color: 0x77ff77 });
+  const platform = new THREE.Mesh(geo, mat);
+  platform.position.set(x, y, z);
+  scene.add(platform);
+  platformChunks.push(platform);
+
+  lastPlatform = { x, y, z };
+
+  // Optional slime
+  if (Math.random() < 0.4 && z !== 0) {
+    const slimeGeo = new THREE.SphereGeometry(0.8, 16, 16);
+    const slimeMat = new THREE.MeshStandardMaterial({
+      color: 0xff33cc,
+      emissive: 0xff33cc,
+      emissiveIntensity: 0.3
+    });
+    const slime = new THREE.Mesh(slimeGeo, slimeMat);
+    slime.position.set(x + (Math.random() * 4 - 2), y + 1, z + (Math.random() * 8 - 4));
+    scene.add(slime);
+    slimeObstacles.push(slime);
+  }
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Controls
+  if (keys['a'] || keys['arrowleft']) horizontalVelocity = Math.max(horizontalVelocity - 0.02, -maxHorizontalSpeed);
+  else if (keys['d'] || keys['arrowright']) horizontalVelocity = Math.min(horizontalVelocity + 0.02, maxHorizontalSpeed);
+  else horizontalVelocity *= 0.9;
+
+  if ((keys[' '] || keys['space']) && isGrounded) {
+    yVelocity = jumpForce;
+    isGrounded = false;
+  }
+
+  yVelocity += gravity;
+  isGrounded = false;
+
+  for (const platform of platformChunks) {
+    const dx = Math.abs(ball.position.x - platform.position.x);
+    const dz = Math.abs(ball.position.z - platform.position.z);
+    const platformTop = platform.position.y + 1.5;
+    if (dx < 10 && dz < 15 && ball.position.y <= platformTop + 0.1 && ball.position.y > platformTop - 2) {
+      ball.position.y = platformTop;
+      yVelocity = -yVelocity * jumpDampen;
+      isGrounded = true;
+    }
+  }
+
+  // Move ball
+  ball.position.x += horizontalVelocity;
+  ball.position.y += yVelocity;
+  ball.position.z += velocity.z;
+
+  // Camera follow
+  camera.position.z = ball.position.z + 15;
+  camera.position.x = ball.position.x;
+  camera.position.y = ball.position.y + 5;
+  camera.lookAt(ball.position.x, ball.position.y, ball.position.z);
+
+  // Spawn new platforms
+  while (lastPlatform.z > ball.position.z - 200) {
+    spawnPlatformChunk(lastPlatform.z - 25);
+  }
+
+  // Clean up
+  platformChunks.forEach((chunk, i) => {
+    if (chunk.position.z > ball.position.z + 50) {
+      scene.remove(chunk);
+      platformChunks.splice(i, 1);
+    }
+  });
+
+  slimeObstacles.forEach((slime, i) => {
+    if (slime.position.z > ball.position.z + 50) {
+      scene.remove(slime);
+      slimeObstacles.splice(i, 1);
+    }
+  });
+
+  // Slime collision
+  for (const slime of slimeObstacles) {
+    if (ball.position.distanceTo(slime.position) < 1.2) {
+      endGame("SLIME SPLAT! Try again.");
+      return;
+    }
+  }
+
+  if (ball.position.y < -10) {
+    endGame("You fell! Oops!");
+    return;
+  }
+
+  score += 0.1;
+  scoreText.innerText = `Score: ${Math.floor(score)}`;
+  renderer.render(scene, camera);
+}
+
+function endGame(msg) {
+  const finalScore = Math.floor(score);
+  const high = Math.max(finalScore, localStorage.getItem("slimeHigh") || 0);
+  localStorage.setItem("slimeHigh", high);
+  alert(`${msg}\nScore: ${finalScore}\nHigh Score: ${high}`);
+  location.reload();
+}
