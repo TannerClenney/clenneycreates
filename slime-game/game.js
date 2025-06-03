@@ -1,4 +1,4 @@
-// Clean slope-inspired slime game.js
+// Slope-inspired slime game.js with safe tutorial zone
 let scene, camera, renderer, ball;
 let velocity = new THREE.Vector3(0, 0, -0.25);
 let yVelocity = 0;
@@ -14,6 +14,8 @@ let score = 0;
 let scoreText;
 let isGrounded = false;
 let speedMultiplier = 1;
+let platformCount = 0;
+const SAFE_PLATFORM_COUNT = 10;
 
 init();
 animate();
@@ -58,24 +60,32 @@ function init() {
   document.body.appendChild(scoreText);
 
   for (let i = 0; i < 300; i++) {
-    spawnCurvedPlatform();
+    spawnPlatform();
   }
 }
 
-function spawnCurvedPlatform() {
+function spawnPlatform() {
   const width = 10;
   const depth = 20;
   const height = 1;
+  let x, y, z;
 
-  const curveAmplitude = 2;
-  const curveFrequency = 0.05;
-
-  const x = Math.sin(-lastPlatform.z * curveFrequency) * curveAmplitude;
-  const y = lastPlatform.y - 0.01; // subtle slope down
-  const z = lastPlatform.z - 2.5;
+  if (platformCount < SAFE_PLATFORM_COUNT) {
+    // Tutorial zone: safe platforms
+    x = lastPlatform.x;
+    y = lastPlatform.y;
+    z = lastPlatform.z - 1.8; // Safe reach distance
+  } else {
+    // Slope mode
+    const curveAmplitude = 2;
+    const curveFrequency = 0.05;
+    x = Math.sin(-lastPlatform.z * curveFrequency) * curveAmplitude;
+    y = lastPlatform.y - 0.01; // slight slope
+    z = lastPlatform.z - 2.5;
+  }
 
   const geo = new THREE.BoxGeometry(width, height, depth);
-  geo.rotateX(-0.05); // slope effect
+  geo.rotateX(-0.05);
   const mat = new THREE.MeshStandardMaterial({ color: 0x223322 });
   const platform = new THREE.Mesh(geo, mat);
   platform.position.set(x, y, z);
@@ -83,12 +93,12 @@ function spawnCurvedPlatform() {
   platformChunks.push(platform);
 
   lastPlatform = { x, y, z };
+  platformCount++;
 }
 
 function animate() {
   requestAnimationFrame(animate);
 
-  // Controls
   if (keys['a'] || keys['arrowleft']) {
     horizontalVelocity = Math.max(horizontalVelocity - 0.02, -maxHorizontalSpeed);
   } else if (keys['d'] || keys['arrowright']) {
@@ -116,7 +126,6 @@ function animate() {
     }
   }
 
-  // Speed ramping
   speedMultiplier += 0.0001;
   velocity.z = -0.25 * speedMultiplier;
 
