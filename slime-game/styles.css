@@ -1,11 +1,14 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #000;
-}
-#game-container {
-  width: 100vw;
-  height: 100vh;
-}
-
+<style>
+  canvas {
+    background: #222;
+    display: block;
+    margin: auto;
+    border: 3px solid #f4a3a3;
+  }
+  div {
+    text-align: center;
+    font-size: 1.2em;
+    color: #fff;
+    margin-top: 10px;
+  }
+</style>
