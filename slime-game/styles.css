@@ -1,14 +1,35 @@
-<style>
-  canvas {
-    background: #222;
-    display: block;
-    margin: auto;
-    border: 3px solid #f4a3a3;
-  }
-  div {
-    text-align: center;
-    font-size: 1.2em;
-    color: #fff;
-    margin-top: 10px;
-  }
-</style>
+/* Slime Tetris Styling */
+
+body {
+  background: linear-gradient(to bottom, #ffe6f0, #e6f7ff);
+  color: #333;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  color: #ff66b3;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1em;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: #222;
+  border: 5px dashed #ff66b3;
+  box-shadow: 0 0 10px #ff66b3;
+}
+
+div {
+  font-size: 1.2em;
+  margin-top: 10px;
+  color: #333;
+}
